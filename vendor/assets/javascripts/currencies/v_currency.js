@@ -15,7 +15,7 @@ Vue.component('v-currency', {
 
     return {
       dataValue: parsed_value,
-      dataView: parsed_value.toLocaleString(),
+      dataView: parsed_value.toLocaleString('en'),
       containerClasses: 'input-group',
     };
   },
@@ -87,7 +87,7 @@ Vue.component('v-currency', {
       }
       this.dataValue = parsed_value;
       if(!$(this.$refs.control).is(":focus")){
-        this.dataView = parsed_value.toLocaleString();
+        this.dataView = parsed_value.toLocaleString('en');
       }
     }
   },
@@ -96,7 +96,7 @@ Vue.component('v-currency', {
       this.dataView = this.dataValue.toString();
     }.bind(this));
     $(this.$refs.control).on('blur', function(){
-      this.dataView = this.dataValue.toLocaleString();
+      this.dataView = this.dataValue.toLocaleString('en');
     }.bind(this));
 
     $(this.$refs.control).data($(this.$refs.container).data());
