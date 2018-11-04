@@ -22,6 +22,8 @@ Or install it yourself as:
 
 In `app/assets/javascripts/application.js`, add `//= require av_components` after Vue js and JQuery definition.
 
+NOTE: This repo doesn't contain vue or any additions js library. Please add it your own. 
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
