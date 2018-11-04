@@ -1,7 +1,7 @@
 module AvComponents
   module VueHelper
     def vcomponent(name, attributes = {}, &block)
-      VueHelper.vcomponent_stack = name.gsub('-', '/')
+      AvComponents::VueHelper.vcomponent_stack = name.gsub('-', '/')
       if block_given?
         "<#{name} " + attributes.map{ |k, v| "#{k}=\"#{v}\"" }.join(" ") + ">#{capture(&block)}</#{name}>"
       else
@@ -33,18 +33,23 @@ module AvComponents
     end
 
     def self.pop_vcomponent_stack
-      return nil if RequestStore.store[:vcomponent_stack].blank?
+      return if RequestStore.store[:vcomponent_stack].blank?
+
       RequestStore.store[:vcomponent_stack_rendered] = [] if RequestStore.store[:vcomponent_stack_rendered].blank?
 
-      t = RequestStore.store[:vcomponent_stack].delete_at(0)
-      while RequestStore.store[:vcomponent_stack_rendered].include?(t)
-        t = RequestStore.store[:vcomponent_stack].delete_at(0)
+      RequestStore.store[:vcomponent_stack].each do |component|
+        if RequestStore.store[:vcomponent_stack_rendered].include?(component)
+          next
+        end
 
-        return nil if t.nil?
+        yield(component)
+
+        RequestStore.store[:vcomponent_stack_rendered] << component
       end
-      RequestStore.store[:vcomponent_stack_rendered] << t
+    end
 
-      t
+    def pop_vcomponent_stack(&block)
+      AvComponents::VueHelper.pop_vcomponent_stack(&block)
     end
 
     def self.vcomponent_stack=(value)
