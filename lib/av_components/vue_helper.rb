@@ -18,7 +18,7 @@ module AvComponents
     end
 
     def vname(file)
-      cnames = file.split(/^.*\/views\/(.*)\.html\.slim.*$/).reject(&:blank?).first.split("/")
+      cnames = file.split(/^.*\/views\/components\/(.*)\.html\.slim.*$/).reject(&:blank?).first.split("/")
       partial_name = cnames.pop
       if partial_name[0] == "_"
         partial_name[0] = ''
@@ -42,7 +42,7 @@ module AvComponents
           next
         end
 
-        yield(component)
+        yield("components/#{component}")
 
         RequestStore.store[:vcomponent_stack_rendered] << component
       end
