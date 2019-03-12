@@ -37,7 +37,9 @@ module AvComponents
 
       RequestStore.store[:vcomponent_stack_rendered] = [] if RequestStore.store[:vcomponent_stack_rendered].blank?
 
-      RequestStore.store[:vcomponent_stack].each do |component|
+      while !RequestStore.store[:vcomponent_stack].blank?
+        component = RequestStore.store[:vcomponent_stack].pop
+
         if RequestStore.store[:vcomponent_stack_rendered].include?(component)
           next
         end
